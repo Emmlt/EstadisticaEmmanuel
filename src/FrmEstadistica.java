@@ -1,19 +1,20 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 public class FrmEstadistica extends JFrame {
+
+    private JTextField txtDato;
+    private JList lstMuestra;
 
     public FrmEstadistica() {
         setSize(400, 300);
@@ -25,7 +26,7 @@ public class FrmEstadistica extends JFrame {
         lblDato.setBounds(10, 10, 100, 25);
         getContentPane().add(lblDato);
 
-        JTextField txtDato = new JTextField();
+        txtDato = new JTextField();
         txtDato.setBounds(80, 10, 100, 25);
         getContentPane().add(txtDato);
 
@@ -41,7 +42,7 @@ public class FrmEstadistica extends JFrame {
         btnQuitar.setBounds(80, 70, 100, 25);
         getContentPane().add(btnQuitar);
 
-        JList lstMuestra = new JList();
+        lstMuestra = new JList();
         JScrollPane spMuestra = new JScrollPane(lstMuestra);
         spMuestra.setBounds(210, 40, 100, 150);
         getContentPane().add(spMuestra);
@@ -61,16 +62,14 @@ public class FrmEstadistica extends JFrame {
         txtEstadistica.setBounds(210, 200, 100, 25);
         getContentPane().add(txtEstadistica);
 
-        btnAgregar.addActionListener(new ActionListener(){
-
+        btnAgregar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 agregarDato();
             }
         });
 
-        btnQuitar.addActionListener(new ActionListener(){
-
+        btnQuitar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 quitarDato();
@@ -78,12 +77,26 @@ public class FrmEstadistica extends JFrame {
         });
     }
 
+    private double[] muestra = new double[1000];
+    private int totalDatos = -1;
+
     private void agregarDato() {
-        JOptionPane.showMessageDialog(null, "Hizo click en AGREGAR");
+        double dato = Double.parseDouble(txtDato.getText());
+        totalDatos++;
+        muestra[totalDatos] = dato;
+        mostrarMuestra();
+    }
+
+    private void mostrarMuestra() {
+        String[] strMuestra = new String[totalDatos + 1];
+        for (int i = 0; i <= totalDatos; i++) {
+            strMuestra[i] = String.valueOf(muestra[i]);
+        }
+        lstMuestra.setListData(strMuestra);
     }
 
     private void quitarDato() {
-        JOptionPane.showMessageDialog(null, "Hizo click en QUITAR");
+
     }
 
 }
